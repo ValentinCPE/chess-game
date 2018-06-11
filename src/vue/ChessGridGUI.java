@@ -1,6 +1,5 @@
 package vue;
 
-import controler.controlerLocal.ChessControlerLocal;
 import tools.BoardGameConfig;
 import tools.data.ChessPiecePos;
 import tools.data.Coord;
@@ -15,10 +14,13 @@ import java.util.Map;
 
 public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
-    Map<Coord, ChessSquareGUI> map = new HashMap<>();
+    private Map<Coord, ChessSquareGUI> map;
+    private ChessPieceGUI pieceToMove;
+
 
     public ChessGridGUI() {
         super();
+        map = new HashMap<>();
         setCheckersBoard();
     }
 
@@ -33,16 +35,9 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
                 //If the current case is black
                 if ((x+y)%2 == 1) {
                     square = new ChessSquareGUI(BoardGameConfig.getBlackSquareColor(), new Coord(x, y));
-                    /* if (x < 3) {
-                        square.add(addPawn(this.checkersGameGUIData, Couleur.NOIR.toString()));
-                    } else if (x > 6) {
-                        square.add(addPawn(this.checkersGameGUIData, Couleur.BLANC.toString()));
-                    }
-                    */
                 } else {
                     square = new ChessSquareGUI(BoardGameConfig.getWhiteSquareColor(), new Coord(x, y));
                 }
-                // square.addMouseListener(this.controller.getCaseSelector());
                 this.add(square);
                 map.put(square.getCoord(), square);
             }
@@ -71,7 +66,7 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     @Override
     public void setPieceToMove(Coord coord) {
-
+        this.pieceToMove = (ChessPieceGUI) (this.map.get(coord).getComponents()[0]);
     }
 
     @Override
@@ -81,7 +76,6 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     @Override
     public void movePiece(Coord targetCoord) {
-
     }
 
     @Override
@@ -97,6 +91,17 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
     @Override
     public void promotePiece(Coord coord, String promotionType) {
 
+    }
+
+    public Coord getCoordForSquareGUI(int x, int y){
+        Component c = this.findComponentAt(x, y);
+        return ((ChessSquareGUI) c.getParent()).getCoord();
+    }
+
+    public Couleur getCouleurPieceForSquareCoord(Coord coord){
+        ChessSquareGUI chessSquareGUI = this.map.get(coord);
+        ChessPieceGUI pieceGUI = (ChessPieceGUI) chessSquareGUI.getComponents()[0];
+        return pieceGUI.getCol();
     }
 
 }

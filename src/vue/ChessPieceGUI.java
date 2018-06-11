@@ -1,6 +1,5 @@
 package vue;
 
-import tools.data.ChessPieceImage;
 import tools.data.Couleur;
 
 import javax.swing.*;
@@ -17,4 +16,17 @@ public class ChessPieceGUI extends JLabel {
         this.col = col;
         this.nom = nom;
     }
+
+    public Icon getImg() {
+        return img;
+    }
+
+    public Couleur getCol() {
+        return col;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
 }
