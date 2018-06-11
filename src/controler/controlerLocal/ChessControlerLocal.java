@@ -8,6 +8,7 @@ import tools.data.Coord;
 import tools.data.Couleur;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Observer;
 
 public class ChessControlerLocal implements ChessGameControlerModelVue {
@@ -25,12 +26,12 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     @Override
     public boolean isPlayerOk(Couleur pieceToMoveCouleur) {
-        return false;
+        return (chessGameModel.getColorCurrentPlayer() == pieceToMoveCouleur);
     }
 
     @Override
     public void actionsWhenPieceIsSelectedOnGUI(Coord pieceToMoveCoord, Couleur pieceToMoveCouleur) {
-
+       // TODO : déplacement ici ou dans chessGridGUI avec appel à une méthode
     }
 
     @Override

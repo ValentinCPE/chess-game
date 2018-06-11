@@ -1,5 +1,6 @@
 package model.business;
 
+import tools.BoardGameConfig;
 import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
@@ -8,9 +9,15 @@ import java.util.List;
 
 public class ChessModel implements ChessGameModel {
 
+    private Couleur colorCurrentPlayer;
+
+    public ChessModel(){
+        this.colorCurrentPlayer = BoardGameConfig.getBeginColor();
+    }
+
     @Override
     public Couleur getColorCurrentPlayer() {
-        return null;
+        return this.colorCurrentPlayer;
     }
 
     @Override
