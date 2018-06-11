@@ -2,9 +2,10 @@ package vue;
 
 import tools.data.Coord;
 
+import javax.swing.*;
 import java.util.List;
 
-public class ChessGridGUI implements ChessGameGUI {
+public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     @Override
     public void setPieceToMove(Coord coord) {
