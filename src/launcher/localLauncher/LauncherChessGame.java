@@ -45,7 +45,7 @@ public class LauncherChessGame {
 				new Color(139,69,0), 		// couleur des cases noires
 				new Color(255,250,240), 	// couleur des cases blanches
 				750);						// taille du damier
-		dim = new Dimension(1000, 800);
+		dim = new Dimension(1200, 800);
 		
 		chessGame = new ChessModelObs();	
 		chessGameControler = new ChessControlerLocal(chessGame);
