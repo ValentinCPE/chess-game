@@ -31,6 +31,16 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     @Override
     public void actionsWhenPieceIsSelectedOnGUI(Coord pieceToMoveCoord, Couleur pieceToMoveCouleur) {
+        /*  Point parentLocation = c.getParent().getLocation();
+        System.out.println(parentLocation);
+            xAdjustment = parentLocation.x - e.getX();
+           yAdjustment = parentLocation.y - e.getY();
+
+            chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+            chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
+       JLabel chessPiece = (JLabel) c;
+       chessPiece.setLocation(e.getX() , e.getY() );
+       this.add(chessPiece, JLayeredPane.DRAG_LAYER); */
        // TODO : déplacement ici ou dans chessGridGUI avec appel à une méthode
     }
 
