@@ -1,11 +1,14 @@
 package controler.controlerLocal;
 
 import controler.ChessGameControlerModelVue;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import model.business.ChessGameModel;
 import tools.data.Coord;
 import tools.data.Couleur;
 
 import javax.swing.*;
+import java.util.Observer;
 
 public class ChessControlerLocal implements ChessGameControlerModelVue {
 
@@ -34,5 +37,4 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
     public void actionsWhenPieceIsMovedOnGUI(Coord pieceToMoveCoord, Coord targetCoord) {
 
     }
-
 }

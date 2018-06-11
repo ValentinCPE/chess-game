@@ -26,7 +26,7 @@ public class ChessGUI extends JFrame implements Observer {
 	public ChessGUI(ChessGameControlerModelVue chessGameControler) {
 		super();
 		Container contentPane = this.getContentPane();
-		this.chessGridGUI = new ChessGridGUI( );
+		this.chessGridGUI = new ChessGridGUI();
 		
 		///////////////////////////////////////////////////////
 		// panel d'affichage de la trace d'exécution à droite
@@ -122,7 +122,6 @@ public class ChessGUI extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-
 		MessageModelToGUI message = (MessageModelToGUI) arg1;
 		execTrace.appendText(message + "\n");
 
