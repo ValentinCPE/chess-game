@@ -30,8 +30,11 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Component c =  this.chessGridGUI.findComponentAt(e.getX(), e.getY());
 
+            Component c =  this.chessGridGUI.findComponentAt(e.getX(), e.getY());
+        if (!chessGameControlerModelVue.isPlayerOk(this.chessGridGUI.getCouleurPieceForSquareCoord(
+                this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY())
+        ))) return;
         if(c instanceof ChessPieceGUI){
 
             Point parentLocation = c.getParent().getLocation();
