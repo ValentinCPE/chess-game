@@ -35,7 +35,7 @@ public interface ChessGameGUI {
 	public void resetLight(List<Coord> coords, boolean isLight) ;
 
 	/**
-	 * @param coord
+	 * @param targetCoord
 	 * 
 	 * Cette méthode est appelée par le CONTROLER en cas de mouseReleased()
 	 * uniquement dans le cas ou l'appel controler.doMoveAndPromote() est OK
@@ -47,7 +47,7 @@ public interface ChessGameGUI {
 	public void movePiece(Coord targetCoord) ;
 
 	/**
-	 * @param coord
+	 * @param pieceToMoveInitCoord
 	 * 
 	 * Cette méthode est appelée par le CONTROLER  en cas de mouseReleased()
 	 * lorsque le déplacement est illégal

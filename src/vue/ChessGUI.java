@@ -97,7 +97,7 @@ public class ChessGUI extends JFrame implements Observer {
 		// les transmets au controler qui les transmets au model
 		/////////////////////////////////////////////////////////////
 		EventListener mouseEventListener = 
-				new ChessGridGUIListener( this.chessGridGUI, chessGameControler);
+				new ChessGridGUIListener(this.chessGridGUI, chessGameControler);
 		
 		this.chessGridGUI.addMouseListener((MouseListener) mouseEventListener);
 		this.chessGridGUI.addMouseMotionListener((MouseMotionListener) mouseEventListener);
