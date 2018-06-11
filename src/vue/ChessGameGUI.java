@@ -4,6 +4,8 @@ package vue;
 import java.util.List;
 import tools.data.Coord;
 
+import javax.swing.*;
+
 
 /**
  * @author francoise.perrin
