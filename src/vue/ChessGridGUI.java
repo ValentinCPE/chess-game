@@ -4,11 +4,13 @@ import tools.BoardGameConfig;
 import tools.data.ChessPiecePos;
 import tools.data.Coord;
 import tools.data.Couleur;
+import tools.data.TextMessage;
+import tools.exception.CoordIsNullException;
+import tools.exception.PieceDoesNotExist;
 import tools.factory.ChessImageProvider;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +18,9 @@ import java.util.Map;
 public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     private Map<Coord, ChessSquareGUI> map;
-    private int xAdjustment,yAdjustment;
     private ChessPieceGUI pieceToMove;
+    private Coord initialCoord;
+    private int xAdjustment, yAdjustment;
 
 
     public ChessGridGUI() {
@@ -67,15 +70,25 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     @Override
     public void setPieceToMove(Coord coord) {
-        this.pieceToMove = (ChessPieceGUI) (this.map.get(coord).getComponents()[0]);
+        try {
+            if (coord == null) {
+                throw new CoordIsNullException(TextMessage.COORD_IS_NULL.toString());
+            } else {
+                this.pieceToMove = (ChessPieceGUI) (this.map.get(coord).getComponents()[0]);
 
-        Point parentLocation = this.pieceToMove.getParent().getLocation();
-        this.xAdjustment = parentLocation.x - coord.getX();
-        this.yAdjustment = parentLocation.y - coord.getY();
+                Point parentLocation = this.pieceToMove.getParent().getLocation();
+                this.xAdjustment = parentLocation.x - coord.getX();
+                this.yAdjustment = parentLocation.y - coord.getY();
 
-        this.pieceToMove.setLocation(coord.getX() + xAdjustment, coord.getY() + yAdjustment);
-        this.pieceToMove.setSize(this.pieceToMove.getWidth(), this.pieceToMove.getHeight());
-        this.add(this.pieceToMove, JLayeredPane.DRAG_LAYER);
+                this.pieceToMove.setLocation(coord.getX() + xAdjustment, coord.getY() + yAdjustment);
+                this.pieceToMove.setSize(this.pieceToMove.getWidth(), this.pieceToMove.getHeight());
+                this.add(this.pieceToMove, JLayeredPane.DRAG_LAYER);
+            }
+
+        } catch (CoordIsNullException coordIsNull){
+            this.pieceToMove = null;
+            System.err.println(coordIsNull.getMessage());
+        }
     }
 
     @Override
@@ -100,7 +113,15 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     @Override
     public void undoMovePiece(Coord pieceToMoveInitCoord) {
-
+        try {
+            if (this.pieceToMove == null) {
+                throw new PieceDoesNotExist(TextMessage.PIECE_DOES_NOT_EXIST.toString());
+            } else {
+                this.pieceToMove.setLocation(this.getX(), this.getY());
+            }
+        } catch (PieceDoesNotExist exc){
+            System.err.println(exc.getMessage());
+        }
     }
 
     @Override
@@ -113,8 +134,10 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     }
 
-    public void pieceIsMoving(MouseEvent e){
-   //     this.pieceToMove.setLocation(e.getX(), e.getY());
+    public void pieceIsMoving(Coord coord){
+        if(this.pieceToMove != null && coord != null){
+            this.pieceToMove.setLocation(coord.getX() + this.xAdjustment, coord.getY() + this.yAdjustment);
+        }
     }
 
     public Coord getCoordForSquareGUI(int x, int y){
@@ -151,5 +174,13 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     public ChessPieceGUI getPieceToMove() {
         return pieceToMove;
+    }
+
+    public void setInitialCoord(Coord initialCoord) {
+        this.initialCoord = initialCoord;
+    }
+
+    public Coord getInitialCoord() {
+        return initialCoord;
     }
 }
