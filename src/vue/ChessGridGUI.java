@@ -8,6 +8,7 @@ import tools.factory.ChessImageProvider;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,14 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
     @Override
     public void setPieceToMove(Coord coord) {
         this.pieceToMove = (ChessPieceGUI) (this.map.get(coord).getComponents()[0]);
+
+        Point parentLocation = this.pieceToMove.getParent().getLocation();
+        this.xAdjustment = parentLocation.x - coord.getX();
+        this.yAdjustment = parentLocation.y - coord.getY();
+
+        this.pieceToMove.setLocation(coord.getX() + xAdjustment, coord.getY() + yAdjustment);
+        this.pieceToMove.setSize(this.pieceToMove.getWidth(), this.pieceToMove.getHeight());
+        this.add(this.pieceToMove, JLayeredPane.DRAG_LAYER);
     }
 
     @Override
@@ -77,9 +86,17 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     @Override
     public void movePiece(Coord targetCoord) {
-        this.pieceToMove.setLocation(targetCoord.getX() + xAdjustment, targetCoord.getY() + yAdjustment);
-        this.pieceToMove.setSize(this.pieceToMove.getWidth(), this.pieceToMove.getHeight());
-        this.add(this.pieceToMove, JLayeredPane.DRAG_LAYER);
+        if(this.pieceToMove == null) return;
+
+        this.pieceToMove.setVisible(false);
+
+        ChessSquareGUI laCase = this.map.get(targetCoord);
+
+        if (laCase != null){
+            laCase.add( this.pieceToMove );
+        }
+
+        this.pieceToMove.setVisible(true);
     }
 
     @Override
@@ -97,12 +114,34 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     }
 
+    public void pieceIsMoving(MouseEvent e){
+   //     this.pieceToMove.setLocation(e.getX(), e.getY());
+    }
+
     public Coord getCoordForSquareGUI(int x, int y){
+        Coord ret = null;
+
         Component c = this.findComponentAt(x, y);
 
-        if(!(c.getParent() instanceof ChessSquareGUI)) return null;
+        if((c instanceof ChessPieceGUI)) {
+            c = c.getParent();
+        }
 
-        return ((ChessSquareGUI) c.getParent()).getCoord();
+
+        if((c instanceof ChessSquareGUI)) {
+            ChessSquareGUI laCase;
+            laCase = (ChessSquareGUI) c;
+            ret = laCase.getCoord();
+        }
+
+        if((c instanceof ChessGridGUI)) {
+            System.out.println(c);
+        }
+
+        System.out.println(c);
+        System.out.println(ret);
+
+        return ret;
     }
 
     public Couleur getCouleurPieceForSquareCoord(Coord coord){
