@@ -47,7 +47,8 @@ public class LauncherChessGame {
 				750);						// taille du damier
 		dim = new Dimension(1200, 800);
 		
-		chessGame = new ChessModelObs();	
+		chessGame = new ChessModelObs();
+		System.out.println(chessGame.toString());
 		chessGameControler = new ChessControlerLocal(chessGame);
 		
 		frame = new ChessGUI(chessGameControler);

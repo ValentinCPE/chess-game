@@ -10,9 +10,19 @@ import java.util.List;
 public class ChessModel implements ChessGameModel {
 
     private Couleur colorCurrentPlayer;
+    private ChessImplementor chessImplementor;
 
     public ChessModel(){
         this.colorCurrentPlayer = BoardGameConfig.getBeginColor();
+        this.chessImplementor = new ChessImplementor();
+    }
+
+    @Override
+    public String toString() {
+        return "ChessModel{" +
+                "colorCurrentPlayer=" + colorCurrentPlayer +
+                ", chessImplementor=" + chessImplementor +
+                '}';
     }
 
     @Override
