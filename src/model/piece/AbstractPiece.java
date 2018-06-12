@@ -16,6 +16,7 @@ public abstract class AbstractPiece implements Pieces {
     }
 
     public abstract boolean isMoveOk(Pieces piece, Coord targetCoord);
+
     public abstract void getMoveItinary();
 
     public String getNom() {
@@ -31,7 +32,7 @@ public abstract class AbstractPiece implements Pieces {
     }
 
     public void setCoord(Coord coord) {
-        this.coord = coord;
+        this.coord.setXY(coord.getX(), coord.getY());
     }
 
     @Override

@@ -29,13 +29,11 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-
         Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
 
         this.initialCoord = coord;
         this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
                 this.chessGridGUI.getCouleurPieceForSquareCoord(coord));
-
     }
 
     @Override

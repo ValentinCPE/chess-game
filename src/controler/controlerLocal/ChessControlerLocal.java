@@ -2,6 +2,7 @@ package controler.controlerLocal;
 
 import controler.ChessGameControlerModelVue;
 import model.business.ChessGameModel;
+import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
 import vue.ChessGridGUI;
@@ -47,7 +48,10 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     @Override
     public void actionsWhenPieceIsMovedOnGUI(Coord pieceToMoveCoord, Coord targetCoord) {
-        this.chessGameModel.move(pieceToMoveCoord.getX(), pieceToMoveCoord.getY(), targetCoord.getX(), targetCoord.getY());
+        ActionType move = this.chessGameModel.move(pieceToMoveCoord.getX(), pieceToMoveCoord.getY(), targetCoord.getX(), targetCoord.getY());
+        if (move == ActionType.ILLEGAL) {
+
+        }
         this.chessGridGUI.movePiece(targetCoord);
     }
 }

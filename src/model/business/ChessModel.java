@@ -1,5 +1,6 @@
 package model.business;
 
+import model.piece.Pieces;
 import tools.BoardGameConfig;
 import tools.data.ActionType;
 import tools.data.Coord;
@@ -32,7 +33,8 @@ public class ChessModel implements ChessGameModel {
 
     @Override
     public Couleur getPieceColor(int x, int y) {
-        return null;
+        System.out.println(this.chessImplementor.getMap());
+        return this.chessImplementor.getMap().get(new Coord(x, y)).getCouleur();
     }
 
     @Override
@@ -42,12 +44,15 @@ public class ChessModel implements ChessGameModel {
 
     @Override
     public ActionType move(int xInit, int yInit, int xFinal, int yFinal) {
-        if (this.chessImplementor.checkMoveOk(new Coord(xInit, yInit), new Coord(xFinal, yFinal))) {
-            System.out.println("moved");
+        Coord cInit = new Coord(xInit, yInit);
+        Coord cFinal = new Coord(xFinal, yFinal);
+        Pieces movingPiece = this.chessImplementor.getMap().get(cInit);
+        if (movingPiece.isMoveOk(movingPiece, cFinal)) {
+            movingPiece.doMove(xFinal, yFinal);
             return ActionType.MOVE;
-        } else {
-            return ActionType.ILLEGAL;
         }
+
+        return ActionType.UNKNOWN;
     }
 
     @Override

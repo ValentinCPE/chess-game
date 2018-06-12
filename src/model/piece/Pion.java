@@ -15,10 +15,13 @@ public class Pion extends AbstractPiece{
     @Override
     public boolean isMoveOk(Pieces piece, Coord targetCoord) {
         boolean isMoveOK = true;
-        if (piece.getCouleur() == Couleur.BLANC && piece.getY() == 6) {
+        System.out.println("color "+piece.getCouleur());
+        if (piece.getCouleur() == Couleur.BLANC) {
             if (piece.getX() == 6) {
+                System.out.println("premier move");
                 isMoveOK = targetCoord.getY() + 2 == piece.getY() && targetCoord.getX() == piece.getX();
             } else {
+                System.out.println("autre move");
                 isMoveOK = targetCoord.getY() + 1 == piece.getY() && targetCoord.getX() == piece.getX();
             }
         } else {
@@ -49,17 +52,18 @@ public class Pion extends AbstractPiece{
 
     @Override
     public Couleur getCouleur() {
-        return null;
+        return this.getCol();
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.getNom();
     }
 
     @Override
     public ActionType doMove(int xFinal, int yFinal) {
-        return null;
+        this.setCoord(new Coord(xFinal, yFinal));
+        return ActionType.MOVE;
     }
 
     @Override

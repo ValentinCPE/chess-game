@@ -43,7 +43,6 @@ public class ChessModelObs extends Observable implements ChessGameModel {
 
 	@Override
 	public ActionType move (int xInit, int yInit, int xFinal, int yFinal){
-
 		ActionType ret = ActionType.UNKNOWN; 
 		Couleur couleur = chessGameModel.getPieceColor(xInit, yInit);
 		ret = this.chessGameModel.move(xInit, yInit, xFinal, yFinal);
