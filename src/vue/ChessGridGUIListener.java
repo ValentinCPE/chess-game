@@ -28,12 +28,12 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(e.getSource() instanceof ChessPieceGUI) {
-            Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
 
-            this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
-                    this.chessGridGUI.getCouleurPieceForSquareCoord(coord));
-        }
+        Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
+
+        this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
+                this.chessGridGUI.getCouleurPieceForSquareCoord(coord));
+
     }
 
     @Override
@@ -54,6 +54,7 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
         }
 
         chessPiece.setVisible(true); */
+        this.chessGameControlerModelVue.actionsWhenPieceIsMovedOnGUI(this.chessGridGUI.getCoordForSquareGUI(0,0), this.chessGridGUI.getCoordForSquareGUI(e.getX(),e.getY()));
     }
 
     @Override
@@ -68,7 +69,7 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mouseDragged(MouseEvent e) {
- //       this.chessGameControlerModelVue.actionsWhenPieceIsMovedOnGUI(this.chessGridGUI.getCoordForSquareGUI(0,0), this.chessGridGUI.getCoordForSquareGUI(e.getX(),e.getY()));
+
     }
 
     @Override

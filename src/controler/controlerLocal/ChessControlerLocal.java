@@ -1,19 +1,17 @@
 package controler.controlerLocal;
 
 import controler.ChessGameControlerModelVue;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import model.business.ChessGameModel;
 import tools.data.Coord;
 import tools.data.Couleur;
+import vue.ChessGridGUI;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.Observer;
 
 public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     private ChessGameModel chessGameModel;
+    private ChessGridGUI chessGridGUI;
 
     public ChessControlerLocal(ChessGameModel chessModelObs){
         this.chessGameModel = chessModelObs;
@@ -21,7 +19,7 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     @Override
     public void setGridPanel(JLayeredPane panel) {
-
+        this.chessGridGUI = (ChessGridGUI) panel;
     }
 
     @Override
@@ -41,11 +39,14 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
        JLabel chessPiece = (JLabel) c;
        chessPiece.setLocation(e.getX() , e.getY() );
        this.add(chessPiece, JLayeredPane.DRAG_LAYER); */
-       // TODO : déplacement ici ou dans chessGridGUI avec appel à une méthode
+        // TODO : déplacement ici ou dans chessGridGUI avec appel à une méthode
+        this.chessGridGUI.setPieceToMove(pieceToMoveCoord);
+
+
     }
 
     @Override
     public void actionsWhenPieceIsMovedOnGUI(Coord pieceToMoveCoord, Coord targetCoord) {
-
+        this.chessGridGUI.movePiece(pieceToMoveCoord);
     }
 }

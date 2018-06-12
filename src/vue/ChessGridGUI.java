@@ -79,7 +79,7 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
     public void movePiece(Coord targetCoord) {
         this.pieceToMove.setLocation(targetCoord.getX() + xAdjustment, targetCoord.getY() + yAdjustment);
         this.pieceToMove.setSize(this.pieceToMove.getWidth(), this.pieceToMove.getHeight());
-        //this.add(chessPiece, JLayeredPane.DRAG_LAYER);
+        this.add(this.pieceToMove, JLayeredPane.DRAG_LAYER);
     }
 
     @Override
