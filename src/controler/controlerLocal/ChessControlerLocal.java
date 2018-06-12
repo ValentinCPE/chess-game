@@ -2,6 +2,7 @@ package controler.controlerLocal;
 
 import controler.ChessGameControlerModelVue;
 import model.business.ChessGameModel;
+import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
 import vue.ChessGridGUI;
@@ -29,25 +30,35 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     @Override
     public void actionsWhenPieceIsSelectedOnGUI(Coord pieceToMoveCoord, Couleur pieceToMoveCouleur) {
-        /*  Point parentLocation = c.getParent().getLocation();
-        System.out.println(parentLocation);
-            xAdjustment = parentLocation.x - e.getX();
-           yAdjustment = parentLocation.y - e.getY();
-
-            chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-            chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
-       JLabel chessPiece = (JLabel) c;
-       chessPiece.setLocation(e.getX() , e.getY() );
-       this.add(chessPiece, JLayeredPane.DRAG_LAYER); */
-        // TODO : déplacement ici ou dans chessGridGUI avec appel à une méthode
         this.chessGridGUI.setPieceToMove(pieceToMoveCoord);
-
-
     }
 
     @Override
     public void actionsWhenPieceIsMovedOnGUI(Coord pieceToMoveCoord, Coord targetCoord) {
-        this.chessGameModel.move(pieceToMoveCoord.getX(), pieceToMoveCoord.getY(), targetCoord.getX(), targetCoord.getY());
-        this.chessGridGUI.movePiece(targetCoord);
+        ActionType actionType = this.chessGameModel.move(pieceToMoveCoord.getX(), pieceToMoveCoord.getY(), targetCoord.getX(), targetCoord.getY());
+
+       // this.chessGridGUI.movePiece(targetCoord);
+
+        switch (actionType){
+
+            case UNKNOWN:
+                this.chessGridGUI.undoMovePiece(pieceToMoveCoord);
+
+            case ILLEGAL:
+                this.chessGridGUI.undoMovePiece(pieceToMoveCoord);
+
+            case MOVE:
+                this.chessGridGUI.movePiece(targetCoord);
+
+            case TAKE:
+
+            case PROMOTION:
+                this.chessGridGUI.promotePiece(targetCoord,this.chessGridGUI.getPromotionType());
+
+            default:
+                System.out.println("DEFAULT");
+        }
+
+
     }
 }
