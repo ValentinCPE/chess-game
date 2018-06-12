@@ -40,9 +40,10 @@ public class ChessImplementor implements ChessGameImplementor {
     }
 
     public boolean checkMoveOk(Coord coordPiece, Coord target) {
+        System.out.println("coord to look for " + coordPiece.toString());
         Pieces movingPiece = this.map.get(coordPiece);
         System.out.println("moving piece "+ movingPiece);
-        return (movingPiece.isMoveOk(movingPiece, target));
+        return movingPiece != null && movingPiece.isMoveOk(movingPiece, target);
     }
 
 }

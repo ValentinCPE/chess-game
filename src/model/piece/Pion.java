@@ -15,17 +15,17 @@ public class Pion extends AbstractPiece{
     @Override
     public boolean isMoveOk(Pieces piece, Coord targetCoord) {
         boolean isMoveOK = true;
-        if (piece.getCouleur() == Couleur.BLANC && piece.getX() == 6) {
+        if (piece.getCouleur() == Couleur.BLANC && piece.getY() == 6) {
             if (piece.getX() == 6) {
-                isMoveOK = targetCoord.getX() + 2 == piece.getX() && targetCoord.getY() == piece.getY();
+                isMoveOK = targetCoord.getY() + 2 == piece.getY() && targetCoord.getX() == piece.getX();
             } else {
-                isMoveOK = targetCoord.getX() + 1 == piece.getX() && targetCoord.getY() == piece.getY();
+                isMoveOK = targetCoord.getY() + 1 == piece.getY() && targetCoord.getX() == piece.getX();
             }
         } else {
             if (piece.getX() == 1) {
-                isMoveOK = targetCoord.getX() + 2 == piece.getX() && targetCoord.getY() == piece.getY();
+                isMoveOK = targetCoord.getY() + 2 == piece.getY() && targetCoord.getX() == piece.getX();
             } else {
-                isMoveOK = targetCoord.getX() + 1 == piece.getX() && targetCoord.getY() == piece.getY();
+                isMoveOK = targetCoord.getY() + 1 == piece.getY() && targetCoord.getX() == piece.getX();
             }
         }
         System.out.println("is move ok ? " + isMoveOK);

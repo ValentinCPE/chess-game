@@ -31,8 +31,8 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
      */
     private void setCheckersBoard() {
         this.setLayout(new GridLayout(BoardGameConfig.getNbLigne(), BoardGameConfig.getNbColonne()));
-        for (int x = 0; x < BoardGameConfig.getNbLigne(); x++){
-            for(int y = 0; y < BoardGameConfig.getNbColonne(); y++) {
+        for (int y = 0; y < BoardGameConfig.getNbLigne(); y++){
+            for(int x = 0; x < BoardGameConfig.getNbColonne(); x++) {
                 ChessSquareGUI square;
                 if ((x+y)%2 == 1) {
                     square = new ChessSquareGUI(BoardGameConfig.getBlackSquareColor(), new Coord(x, y));

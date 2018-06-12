@@ -44,8 +44,10 @@ public class ChessModel implements ChessGameModel {
     public ActionType move(int xInit, int yInit, int xFinal, int yFinal) {
         if (this.chessImplementor.checkMoveOk(new Coord(xInit, yInit), new Coord(xFinal, yFinal))) {
             System.out.println("moved");
+            return ActionType.MOVE;
+        } else {
+            return ActionType.ILLEGAL;
         }
-        return null;
     }
 
     @Override
