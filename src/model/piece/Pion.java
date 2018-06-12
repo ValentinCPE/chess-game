@@ -6,7 +6,9 @@ import tools.data.Couleur;
 
 import java.util.List;
 
-public class Pion extends AbstractPiece{
+public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
+
+    private boolean hasMoved = false;
 
     public Pion(Couleur col, Coord coord) {
         super("Pion", coord, col);
@@ -63,6 +65,8 @@ public class Pion extends AbstractPiece{
     @Override
     public ActionType doMove(int xFinal, int yFinal) {
         this.setCoord(new Coord(xFinal, yFinal));
+        this.hasMoved = true;
+        System.out.println("this pion " + this.toString());
         return ActionType.MOVE;
     }
 
@@ -73,11 +77,29 @@ public class Pion extends AbstractPiece{
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal) {
-        return false;
+        boolean isOk = true;
+        if (hasMoved()) {
+            if (this.getCouleur() == Couleur.BLANC) {
+                isOk = this.getX() == xFinal+1 && this.getY() == yFinal;
+            } else {
+                isOk = this.getX() == xFinal-1 && this.getY() == yFinal;
+            }
+        } else {
+            if (this.getCouleur() == Couleur.NOIR) {
+                isOk = this.getX() == xFinal+2 && this.getY() == yFinal;
+            } else {
+                isOk = this.getX() == xFinal-2 && this.getY() == yFinal;
+            }
+        }
+        return isOk;
     }
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal, ActionType type) {
+        if (type == ActionType.MOVE) {
+            System.out.println("is a move");
+            return isAlgoMoveOk(xFinal, yFinal);
+        }
         return false;
     }
 
@@ -94,5 +116,10 @@ public class Pion extends AbstractPiece{
     @Override
     public boolean undoLastCatch() {
         return false;
+    }
+
+    @Override
+    public boolean hasMoved() {
+        return hasMoved;
     }
 }

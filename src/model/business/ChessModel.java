@@ -47,11 +47,10 @@ public class ChessModel implements ChessGameModel {
         Coord cInit = new Coord(xInit, yInit);
         Coord cFinal = new Coord(xFinal, yFinal);
         Pieces movingPiece = this.chessImplementor.getMap().get(cInit);
-        if (movingPiece.isMoveOk(movingPiece, cFinal)) {
+        if (movingPiece.isAlgoMoveOk(xFinal, yFinal)) {
             movingPiece.doMove(xFinal, yFinal);
             return ActionType.MOVE;
         }
-
         return ActionType.UNKNOWN;
     }
 
