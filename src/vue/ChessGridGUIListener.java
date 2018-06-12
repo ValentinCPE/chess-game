@@ -14,8 +14,6 @@ import java.awt.event.MouseMotionListener;
 public class ChessGridGUIListener extends ChessGridGUI implements MouseListener, MouseMotionListener{
 
     private ChessGridGUI chessGridGUI;
-    private JLabel chessPiece;
-    private int xAdjustment,yAdjustment;
     private ChessGameControlerModelVue chessGameControlerModelVue;
 
     public ChessGridGUIListener(ChessGridGUI chessGridGUI, ChessGameControlerModelVue chessGameControlerModelVue) {
@@ -30,28 +28,17 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if(e.getSource() instanceof ChessPieceGUI) {
+            Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
 
-            Component c =  this.chessGridGUI.findComponentAt(e.getX(), e.getY());
-        if (!chessGameControlerModelVue.isPlayerOk(this.chessGridGUI.getCouleurPieceForSquareCoord(
-                this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY())
-        ))) return;
-        if(c instanceof ChessPieceGUI){
-
-            Point parentLocation = c.getParent().getLocation();
-            this.xAdjustment = parentLocation.x - e.getX();
-            this.yAdjustment = parentLocation.y - e.getY();
-
-            c.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-            c.setSize(c.getWidth(), c.getHeight());
-            this.chessPiece = (JLabel) c;
-            chessPiece.setLocation(e.getX() , e.getY() );
-            this.chessGridGUI.add(chessPiece, JLayeredPane.DRAG_LAYER);
+            this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
+                    this.chessGridGUI.getCouleurPieceForSquareCoord(coord));
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(chessPiece == null) return;
+        /*if(chessPiece == null) return;
 
         chessPiece.setVisible(false);
         Component c =  this.chessGridGUI.findComponentAt(e.getX(), e.getY());
@@ -66,7 +53,7 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
             parent.add( chessPiece );
         }
 
-        chessPiece.setVisible(true);
+        chessPiece.setVisible(true); */
     }
 
     @Override
@@ -81,7 +68,7 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        this.chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+ //       this.chessGameControlerModelVue.actionsWhenPieceIsMovedOnGUI(this.chessGridGUI.getCoordForSquareGUI(0,0), this.chessGridGUI.getCoordForSquareGUI(e.getX(),e.getY()));
     }
 
     @Override

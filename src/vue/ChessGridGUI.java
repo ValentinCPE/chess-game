@@ -15,6 +15,7 @@ import java.util.Map;
 public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     private Map<Coord, ChessSquareGUI> map;
+    private int xAdjustment,yAdjustment;
     private ChessPieceGUI pieceToMove;
 
 
@@ -76,6 +77,9 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     @Override
     public void movePiece(Coord targetCoord) {
+        this.pieceToMove.setLocation(targetCoord.getX() + xAdjustment, targetCoord.getY() + yAdjustment);
+        this.pieceToMove.setSize(this.pieceToMove.getWidth(), this.pieceToMove.getHeight());
+        //this.add(chessPiece, JLayeredPane.DRAG_LAYER);
     }
 
     @Override
@@ -95,6 +99,9 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     public Coord getCoordForSquareGUI(int x, int y){
         Component c = this.findComponentAt(x, y);
+
+        if(!(c.getParent() instanceof ChessSquareGUI)) return null;
+
         return ((ChessSquareGUI) c.getParent()).getCoord();
     }
 
