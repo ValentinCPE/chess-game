@@ -24,12 +24,12 @@ public class Roi extends AbstractPiece {
 
     @Override
     public int getX() {
-        return 0;
+        return this.getCoord().getX();
     }
 
     @Override
     public int getY() {
-        return 0;
+        return this.getCoord().getY();
     }
 
     @Override

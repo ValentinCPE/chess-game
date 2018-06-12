@@ -30,11 +30,10 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
      * Initialisation of the board
      */
     private void setCheckersBoard() {
-        this.setLayout(new GridLayout(BoardGameConfig.getNbColonne(), BoardGameConfig.getNbLigne()));
-        for (int x=0;x<BoardGameConfig.getNbColonne();x++){
-            for(int y = 0; y < BoardGameConfig.getNbLigne(); y++) {
+        this.setLayout(new GridLayout(BoardGameConfig.getNbLigne(), BoardGameConfig.getNbColonne()));
+        for (int x = 0; x < BoardGameConfig.getNbLigne(); x++){
+            for(int y = 0; y < BoardGameConfig.getNbColonne(); y++) {
                 ChessSquareGUI square;
-                //If the current case is black
                 if ((x+y)%2 == 1) {
                     square = new ChessSquareGUI(BoardGameConfig.getBlackSquareColor(), new Coord(x, y));
                 } else {
@@ -150,4 +149,7 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
         return pieceGUI.getCol();
     }
 
+    public ChessPieceGUI getPieceToMove() {
+        return pieceToMove;
+    }
 }

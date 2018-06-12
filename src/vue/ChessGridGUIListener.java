@@ -15,6 +15,7 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     private ChessGridGUI chessGridGUI;
     private ChessGameControlerModelVue chessGameControlerModelVue;
+    private Coord initialCoord;
 
     public ChessGridGUIListener(ChessGridGUI chessGridGUI, ChessGameControlerModelVue chessGameControlerModelVue) {
         this.chessGridGUI = chessGridGUI;
@@ -31,7 +32,7 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
         Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
 
-
+        this.initialCoord = coord;
         this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
                 this.chessGridGUI.getCouleurPieceForSquareCoord(coord));
 
@@ -39,7 +40,7 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.chessGameControlerModelVue.actionsWhenPieceIsMovedOnGUI(null, this.chessGridGUI.getCoordForSquareGUI(e.getX(),e.getY()));
+        this.chessGameControlerModelVue.actionsWhenPieceIsMovedOnGUI(this.initialCoord, this.chessGridGUI.getCoordForSquareGUI(e.getX(),e.getY()));
     }
 
     @Override

@@ -14,7 +14,22 @@ public class Pion extends AbstractPiece{
 
     @Override
     public boolean isMoveOk(Pieces piece, Coord targetCoord) {
-        return false;
+        boolean isMoveOK = true;
+        if (piece.getCouleur() == Couleur.BLANC && piece.getX() == 6) {
+            if (piece.getX() == 6) {
+                isMoveOK = targetCoord.getX() + 2 == piece.getX() && targetCoord.getY() == piece.getY();
+            } else {
+                isMoveOK = targetCoord.getX() + 1 == piece.getX() && targetCoord.getY() == piece.getY();
+            }
+        } else {
+            if (piece.getX() == 1) {
+                isMoveOK = targetCoord.getX() + 2 == piece.getX() && targetCoord.getY() == piece.getY();
+            } else {
+                isMoveOK = targetCoord.getX() + 1 == piece.getX() && targetCoord.getY() == piece.getY();
+            }
+        }
+        System.out.println("is move ok ? " + isMoveOK);
+        return isMoveOK;
     }
 
     @Override
@@ -24,12 +39,12 @@ public class Pion extends AbstractPiece{
 
     @Override
     public int getX() {
-        return 0;
+        return this.getCoord().getX();
     }
 
     @Override
     public int getY() {
-        return 0;
+        return this.getCoord().getY();
     }
 
     @Override

@@ -29,7 +29,7 @@ public class Cavalier extends AbstractPiece {
 
     @Override
     public int getY() {
-        return 0;
+        return this.getCoord().getY();
     }
 
     @Override
