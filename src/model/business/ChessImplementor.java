@@ -39,11 +39,8 @@ public class ChessImplementor implements ChessGameImplementor {
         return ChessPiecesFactory.newPieces(col);
     }
 
-    public boolean checkMoveOk(Coord coordPiece, Coord target) {
-        System.out.println("coord to look for " + coordPiece.toString());
-        Pieces movingPiece = this.map.get(coordPiece);
-        System.out.println("moving piece "+ movingPiece);
-        return movingPiece != null && movingPiece.isMoveOk(movingPiece, target);
-    }
 
+    public Map<Coord, Pieces> getMap() {
+        return map;
+    }
 }

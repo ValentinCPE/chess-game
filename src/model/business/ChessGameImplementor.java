@@ -9,4 +9,6 @@ public interface ChessGameImplementor {
 
     public List<Pieces> createPieces(Couleur col);
 
+    // public boolean isChess();
+
 }
