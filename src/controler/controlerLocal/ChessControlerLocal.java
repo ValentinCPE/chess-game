@@ -47,6 +47,6 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     @Override
     public void actionsWhenPieceIsMovedOnGUI(Coord pieceToMoveCoord, Coord targetCoord) {
-        this.chessGridGUI.movePiece(pieceToMoveCoord);
+        this.chessGridGUI.movePiece(targetCoord);
     }
 }
