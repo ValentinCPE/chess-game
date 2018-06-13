@@ -4,22 +4,13 @@ import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Fou extends AbstractPiece {
 
     public Fou(Couleur col, Coord coord) {
         super("Fou", coord, col);
-    }
-
-    @Override
-    public boolean isMoveOk(Pieces piece, Coord targetCoord) {
-        return false;
-    }
-
-    @Override
-    public void getMoveItinary() {
-
     }
 
     @Override
@@ -60,12 +51,33 @@ public class Fou extends AbstractPiece {
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal, ActionType type) {
-        return false;
+        switch (type) {
+            case MOVE:
+                return isAlgoMoveOk(xFinal, yFinal);
+            default:
+                return false;
+        }
     }
 
     @Override
     public List<Coord> getMoveItinerary(int xFinal, int yFinal) {
-        return null;
+        int x = this.getX();
+        int y = this.getY();
+        List<Coord> l = new ArrayList<>();
+        while (x != xFinal && y != yFinal) {
+            x = prepareCoordinate(x, xFinal);
+            y = prepareCoordinate(y, yFinal);
+            l.add(new Coord(x, y));
+        }
+        return l;
+    }
+
+    private int prepareCoordinate(int cInit, int cFinal) {
+        if (cInit < cFinal) {
+            return cInit++;
+        } else {
+            return cInit--;
+        }
     }
 
     @Override

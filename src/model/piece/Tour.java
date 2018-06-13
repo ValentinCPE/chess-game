@@ -16,11 +16,6 @@ public class Tour extends AbstractPiece {
     }
 
     @Override
-    public boolean isMoveOk(Pieces piece, Coord targetCoord) {
-        return false;
-    }
-
-    @Override
     public int getX() {
         return this.getCoord().getX();
     }
@@ -72,22 +67,22 @@ public class Tour extends AbstractPiece {
         int x = this.getX();
         int y = this.getY();
         while (x != xFinal) {
-            if (x < xFinal) {
-                x--;
-            } else {
-                x++;
-            }
+            x = prepareCoordinate(x, xFinal);
             l.add(new Coord(x, y));
         }
         while (y != yFinal) {
-            if (y < yFinal) {
-                y--;
-            } else {
-                y++;
-            }
+            y = prepareCoordinate(y, yFinal);
             l.add(new Coord(x, y));
         }
         return l;
+    }
+
+    private int prepareCoordinate(int cInit, int cFinal) {
+        if (cInit < cFinal) {
+            return cInit++;
+        } else {
+            return cInit--;
+        }
     }
 
 

@@ -85,6 +85,5 @@ public interface Pieces {
 	 */
 	public boolean undoLastCatch();
 
-    public boolean isMoveOk(Pieces piece, Coord targetCoord);
 };
 

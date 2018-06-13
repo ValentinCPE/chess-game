@@ -8,6 +8,7 @@ import tools.data.Couleur;
 public interface ChessGameControlerModelVue extends ChessGameControlerModel {
 	
 	/**
+	 *
 	 * @param panel
 	 * 
 	 * Cette méthode permet à la vue d'indiquer au controler avec lequel 

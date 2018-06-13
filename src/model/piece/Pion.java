@@ -4,6 +4,7 @@ import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
@@ -12,28 +13,6 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
 
     public Pion(Couleur col, Coord coord) {
         super("Pion", coord, col);
-    }
-
-    @Override
-    public boolean isMoveOk(Pieces piece, Coord targetCoord) {
-        boolean isMoveOK = true;
-        System.out.println("color "+piece.getCouleur());
-        if (piece.getCouleur() == Couleur.BLANC) {
-            if (piece.getX() == 6) {
-                System.out.println("premier move");
-                isMoveOK = targetCoord.getY() + 2 == piece.getY() && targetCoord.getX() == piece.getX();
-            } else {
-                System.out.println("autre move");
-                isMoveOK = targetCoord.getY() + 1 == piece.getY() && targetCoord.getX() == piece.getX();
-            }
-        } else {
-            if (piece.getX() == 1) {
-                isMoveOK = targetCoord.getY() + 2 == piece.getY() && targetCoord.getX() == piece.getX();
-            } else {
-                isMoveOK = targetCoord.getY() + 1 == piece.getY() && targetCoord.getX() == piece.getX();
-            }
-        }
-        return isMoveOK;
     }
 
     @Override
@@ -100,7 +79,9 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
 
     @Override
     public List<Coord> getMoveItinerary(int xFinal, int yFinal) {
-        return null;
+        List<Coord> l = new ArrayList<>();
+        l.add(new Coord(xFinal, yFinal));
+        return l;
     }
 
     @Override

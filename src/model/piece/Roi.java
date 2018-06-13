@@ -14,11 +14,6 @@ public class Roi extends AbstractPiece implements MemoriseSonPremierMouvement {
     }
 
     @Override
-    public boolean isMoveOk(Pieces piece, Coord targetCoord) {
-        return false;
-    }
-
-    @Override
     public int getX() {
         return this.getCoord().getX();
     }
@@ -52,9 +47,7 @@ public class Roi extends AbstractPiece implements MemoriseSonPremierMouvement {
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal) {
-        int deltaX = Math.abs(xFinal - this.getX());
-        int deltaY = Math.abs(yFinal - this.getY());
-        return deltaX == deltaY;
+        return (Math.abs(this.getX() - xFinal) <= 1) && (Math.abs(this.getY() - yFinal) <= 1);
     }
 
     @Override

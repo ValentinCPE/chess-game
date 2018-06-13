@@ -13,11 +13,6 @@ public class Cavalier extends AbstractPiece {
     }
 
     @Override
-    public boolean isMoveOk(Pieces piece, Coord targetCoord) {
-        return false;
-    }
-
-    @Override
     public int getX() {
         return this.getCoord().getX();
     }
@@ -29,17 +24,18 @@ public class Cavalier extends AbstractPiece {
 
     @Override
     public Couleur getCouleur() {
-        return null;
+        return this.getCol();
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.getNom();
     }
 
     @Override
     public ActionType doMove(int xFinal, int yFinal) {
-        return null;
+        this.setCoord(new Coord(xFinal, yFinal));
+        return ActionType.MOVE;
     }
 
     @Override
@@ -54,7 +50,12 @@ public class Cavalier extends AbstractPiece {
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal, ActionType type) {
-        return false;
+        switch (type) {
+            case MOVE:
+                return isAlgoMoveOk(xFinal, yFinal);
+            default:
+                return false;
+        }
     }
 
     @Override

@@ -15,8 +15,6 @@ public abstract class AbstractPiece implements Pieces {
         this.col = col;
     }
 
-    public abstract boolean isMoveOk(Pieces piece, Coord targetCoord);
-
     public String getNom() {
         return nom;
     }
