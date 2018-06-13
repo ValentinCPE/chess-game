@@ -30,30 +30,36 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
 
     @Override
     public void actionsWhenPieceIsSelectedOnGUI(Coord pieceToMoveCoord, Couleur pieceToMoveCouleur) {
-        this.chessGridGUI.setPieceToMove(pieceToMoveCoord);
+        if(this.isPlayerOk(pieceToMoveCouleur)){
+            this.chessGridGUI.setPieceToMove(pieceToMoveCoord);
+        }
     }
 
     @Override
     public void actionsWhenPieceIsMovedOnGUI(Coord pieceToMoveCoord, Coord targetCoord) {
         ActionType actionType = this.chessGameModel.move(pieceToMoveCoord.getX(), pieceToMoveCoord.getY(), targetCoord.getX(), targetCoord.getY());
 
-       // this.chessGridGUI.movePiece(targetCoord);
-
         switch (actionType){
 
             case UNKNOWN:
                 this.chessGridGUI.undoMovePiece(pieceToMoveCoord);
+                break;
 
             case ILLEGAL:
                 this.chessGridGUI.undoMovePiece(pieceToMoveCoord);
+                break;
 
             case MOVE:
                 this.chessGridGUI.movePiece(targetCoord);
+                break;
 
             case TAKE:
+                this.chessGridGUI.take(targetCoord);
+                break;
 
             case PROMOTION:
                 this.chessGridGUI.promotePiece(targetCoord,this.chessGridGUI.getPromotionType());
+                break;
 
             default:
                 System.out.println("DEFAULT");

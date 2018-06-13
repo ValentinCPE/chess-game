@@ -36,20 +36,12 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
                 throw new CoordIsNullException(TextMessage.COORD_IS_NULL.toString());
             }
 
-            if (this.chessGameControlerModelVue.isPlayerOk(this.chessGridGUI.getCouleurPieceForSquareCoord(coord))) {
-                this.chessGridGUI.setInitialCoord(coord);
-                this.chessGridGUI.setPieceToMove(coord);
-            } else {
-                this.chessGridGUI.setPieceToMove(null);
-            }
+            this.chessGridGUI.setInitialCoord(coord);
+            this.chessGridGUI.setPieceToMove(coord);
 
         } catch (CoordIsNullException coordIsNullException){
             System.err.println(coordIsNullException.getMessage());
         }
-
-      /*  this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
-                this.chessGridGUI.getCouleurPieceForSquareCoord(coord)); */
-
     }
 
     @Override

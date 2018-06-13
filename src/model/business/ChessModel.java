@@ -1,6 +1,5 @@
 package model.business;
 
-import model.piece.Pieces;
 import tools.BoardGameConfig;
 import tools.data.ActionType;
 import tools.data.Coord;
@@ -75,7 +74,11 @@ public class ChessModel implements ChessGameModel {
                     return ActionType.TAKE;
                 }
             } else {
-                return this.chessImplementor.doMove(xInit,yInit,xFinal,yFinal);
+                ActionType actionType = this.chessImplementor.doMove(xInit,yInit,xFinal,yFinal);
+                if(actionType == ActionType.MOVE){
+                    this.changePlayer();
+                }
+                return actionType;
             }
 
         }catch(CoordIsNullException exc){
@@ -93,6 +96,14 @@ public class ChessModel implements ChessGameModel {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    private void changePlayer(){
+        if(this.colorCurrentPlayer == Couleur.BLANC){
+            this.colorCurrentPlayer = Couleur.NOIR;
+        }else{
+            this.colorCurrentPlayer = Couleur.BLANC;
+        }
     }
 
 }
