@@ -6,33 +6,27 @@ import tools.data.Coord;
 import tools.data.Couleur;
 import tools.factory.ChessPiecesFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChessImplementor implements ChessGameImplementor {
 
-    private List<Pieces> liste_pieces_blanches;
-    private List<Pieces> liste_pieces_noires;
-    private Map<Coord, Pieces> map = new HashMap<>();
+    private Map<Couleur, List<Pieces>> map = new HashMap<>();
 
     @Override
     public String toString() {
-        return "ChessImplementor{" +
-                "liste_pieces_blanches=" + liste_pieces_blanches +
-                ", liste_pieces_noires=" + liste_pieces_noires +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("ChessImplementor{");
+        stringBuilder.append("liste_pieces_blanches=");
+        stringBuilder.append(this.map.get(Couleur.BLANC));
+        stringBuilder.append(",liste_pieces_noires=");
+        stringBuilder.append(this.map.get(Couleur.NOIR));
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 
     public ChessImplementor() {
-        this.liste_pieces_blanches = createPieces(Couleur.BLANC);
-        this.liste_pieces_noires = createPieces(Couleur.NOIR);
-        for (Pieces p : this.liste_pieces_noires) {
-            this.map.put(new Coord(p.getX(), p.getY()), p);
-        }
-        for (Pieces p2 : this.liste_pieces_blanches) {
-            this.map.put(new Coord(p2.getX(), p2.getY()), p2);
-        }
+        this.map.put(Couleur.BLANC,createPieces(Couleur.BLANC));
+        this.map.put(Couleur.NOIR,createPieces(Couleur.NOIR));
     }
 
     @Override
@@ -41,20 +35,14 @@ public class ChessImplementor implements ChessGameImplementor {
     }
 
 
-    public Map<Coord, Pieces> getMap() {
-        return map;
-    }
-
     public Couleur getColorForAPiece(int x, int y){
-        Coord coord = new Coord(x,y);
-
-        return this.getPieces(coord).getCouleur();
+        return this.getPieceAccordingToXY(x, y).getCouleur();
     }
 
     public boolean canMoveInThisWay(Coord start, Coord end){
         boolean movePossible = false;
 
-        Pieces pieceToTest = this.getPieces(start);
+        Pieces pieceToTest = this.getPieceAccordingToCoord(start);
 
         if(pieceToTest.isAlgoMoveOk(end.getX(),end.getY())){
             movePossible = true;
@@ -66,7 +54,7 @@ public class ChessImplementor implements ChessGameImplementor {
     public boolean isPieceToEatAtPosition(Coord position){
         boolean exists = false;
 
-        if(this.getPieces(position) != null){
+        if(this.getPieceAccordingToCoord(position) != null){
             exists = true;
         }
 
@@ -78,7 +66,7 @@ public class ChessImplementor implements ChessGameImplementor {
 
         Coord start = new Coord(xInit,yInit);
 
-        Pieces pieces = this.getPieces(start);
+        Pieces pieces = this.getPieceAccordingToCoord(start);
 
         if(pieces != null){
             actionType = pieces.doMove(xFinal,yFinal);
@@ -87,7 +75,45 @@ public class ChessImplementor implements ChessGameImplementor {
         return actionType;
     }
 
-    private Pieces getPieces(Coord coord){
-        return this.map.get(coord);
+    private List<Pieces> getPieces(Couleur couleur){
+        return this.map.get(couleur);
+    }
+
+    private Pieces getPieceAccordingToCoordAndColour(Coord coord, Couleur couleur){
+        return this.getPieceAccordingToXYAndColour(coord.getX(),coord.getY(),couleur);
+    }
+
+    private Pieces getPieceAccordingToXYAndColour(int x, int y, Couleur couleur){
+        Pieces pieceFound = null;
+        List<Pieces> pieces = this.map.get(couleur);
+
+        if(pieces != null){
+            for(Pieces piece : pieces){
+                if(piece.getX() == x && piece.getY() == y){
+                    pieceFound = piece;
+                }
+            }
+        }
+
+        return pieceFound;
+    }
+
+    private Pieces getPieceAccordingToCoord(Coord coord){
+        return this.getPieceAccordingToXY(coord.getX(),coord.getY());
+    }
+
+    private Pieces getPieceAccordingToXY(int x, int y){
+        Pieces pieceFound = null;
+        Set set = this.map.entrySet();
+        for (Object aSet : set) {
+            Map.Entry entry = (Map.Entry) aSet;
+            List<Object> obj = (List<Object>) entry.getValue();
+            for (Object pieces : obj) {
+                if (((Pieces) pieces).getX() == x && ((Pieces) pieces).getY() == y) {
+                    pieceFound = (Pieces) pieces;
+                }
+            }
+        }
+        return pieceFound;
     }
 }
