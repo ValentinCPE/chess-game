@@ -84,5 +84,7 @@ public interface Pieces {
 	 * initiales de la pièce au moment de sa capture).
 	 */
 	public boolean undoLastCatch();
+
+    public boolean isMoveOk(Pieces piece, Coord targetCoord);
 };
 

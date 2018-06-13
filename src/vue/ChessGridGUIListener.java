@@ -1,12 +1,11 @@
 package vue;
 
-import controler.ChessGameControlerModel;
 import controler.ChessGameControlerModelVue;
 import tools.data.Coord;
-import tools.data.Couleur;
+import tools.data.TextMessage;
+import tools.exception.CoordIsNullException;
+import tools.exception.PieceDoesNotExist;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -29,17 +28,42 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
     @Override
     public void mousePressed(MouseEvent e) {
 
-        Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
+        try {
 
+            Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
 
-        this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
-                this.chessGridGUI.getCouleurPieceForSquareCoord(coord));
+            if (coord == null) {
+                throw new CoordIsNullException(TextMessage.COORD_IS_NULL.toString());
+            }
+
+            if (this.chessGameControlerModelVue.isPlayerOk(this.chessGridGUI.getCouleurPieceForSquareCoord(coord))) {
+                this.chessGridGUI.setInitialCoord(coord);
+                this.chessGridGUI.setPieceToMove(coord);
+            } else {
+                this.chessGridGUI.setPieceToMove(null);
+            }
+
+        } catch (CoordIsNullException coordIsNullException){
+            System.err.println(coordIsNullException.getMessage());
+        }
+
+      /*  this.chessGameControlerModelVue.actionsWhenPieceIsSelectedOnGUI(coord,
+                this.chessGridGUI.getCouleurPieceForSquareCoord(coord)); */
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.chessGameControlerModelVue.actionsWhenPieceIsMovedOnGUI(null, this.chessGridGUI.getCoordForSquareGUI(e.getX(),e.getY()));
+        try {
+            Coord coordInit = this.chessGridGUI.getInitialCoord();
+            Coord coordEnd = this.chessGridGUI.getCoordForSquareGUI(e.getX(),e.getY());
+
+            if(coordInit == null || coordEnd == null){ throw new PieceDoesNotExist(TextMessage.PIECE_DOES_NOT_EXIST.toString()); }
+
+            this.chessGameControlerModelVue.actionsWhenPieceIsMovedOnGUI(coordInit,coordEnd);
+        } catch (PieceDoesNotExist exc){
+            System.err.println(exc.getMessage());
+        }
     }
 
     @Override
@@ -54,7 +78,8 @@ public class ChessGridGUIListener extends ChessGridGUI implements MouseListener,
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        this.chessGridGUI.pieceIsMoving(e);
+        Coord coord = this.chessGridGUI.getCoordForSquareGUI(e.getX(), e.getY());
+        this.chessGridGUI.pieceIsMoving(coord);
     }
 
     @Override
