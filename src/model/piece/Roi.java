@@ -57,7 +57,7 @@ public class Roi extends AbstractPiece implements MemoriseSonPremierMouvement {
                 return isAlgoMoveOk(xFinal, yFinal);
             default:
                 return false;
-        }s
+        }
     }
 
     @Override

@@ -5,9 +5,8 @@ import model.business.ChessGameModel;
 import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
+import vue.ChessGameGUI;
 import vue.ChessGridGUI;
-
-import javax.swing.*;
 
 public class ChessControlerLocal implements ChessGameControlerModelVue {
 
@@ -19,7 +18,7 @@ public class ChessControlerLocal implements ChessGameControlerModelVue {
     }
 
     @Override
-    public void setGridPanel(JLayeredPane panel) {
+    public void setGridPanel(ChessGameGUI panel) {
         this.chessGridGUI = (ChessGridGUI) panel;
     }
 

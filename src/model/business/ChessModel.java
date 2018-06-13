@@ -61,17 +61,18 @@ public class ChessModel implements ChessGameModel {
             Coord coordInit = new Coord(xInit, yInit);
             Coord coordEnd = new Coord(xFinal, yFinal);
 
-            if (!this.chessImplementor.canMoveInThisWay(coordInit, coordEnd)) {
-                return ActionType.ILLEGAL;
-            }
-
             boolean isPieceToEat = this.chessImplementor.isPieceToEatAtPosition(coordEnd);
 
             if (isPieceToEat) {
                 if (this.getPieceColor(xFinal,yFinal) == this.colorCurrentPlayer) {
                     return ActionType.ILLEGAL;
                 } else {
-                    return ActionType.TAKE;
+                    if(this.chessImplementor.isActionPossible(coordInit,coordEnd,ActionType.TAKE)){
+                        this.changePlayer();
+                        return ActionType.TAKE;
+                    }else{
+                        return ActionType.ILLEGAL;
+                    }
                 }
             } else {
                 ActionType actionType = this.chessImplementor.doMove(xInit,yInit,xFinal,yFinal);

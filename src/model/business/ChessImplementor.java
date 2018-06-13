@@ -39,12 +39,12 @@ public class ChessImplementor implements ChessGameImplementor {
         return this.getPieceAccordingToXY(x, y).getCouleur();
     }
 
-    public boolean canMoveInThisWay(Coord start, Coord end){
+    public boolean isActionPossible(Coord start, Coord end, ActionType actionType){
         boolean movePossible = false;
 
         Pieces pieceToTest = this.getPieceAccordingToCoord(start);
 
-        if(pieceToTest.isAlgoMoveOk(end.getX(),end.getY())){
+        if(pieceToTest.isAlgoMoveOk(end.getX(),end.getY(),actionType)){
             movePossible = true;
         }
 

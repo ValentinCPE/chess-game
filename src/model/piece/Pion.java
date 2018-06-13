@@ -102,9 +102,9 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
 
     private boolean isTakeOk(int xFinal, int yFinal) {
         if (this.getCouleur() == Couleur.BLANC) {
-            return (this.getX() > xFinal) && (Math.abs(this.getY() - yFinal) == 1);
-        } else {
             return (this.getX() < xFinal) && (Math.abs(this.getY() - yFinal) == 1);
+        } else {
+            return (this.getX() > xFinal) && (Math.abs(this.getY() - yFinal) == 1);
         }
     }
 

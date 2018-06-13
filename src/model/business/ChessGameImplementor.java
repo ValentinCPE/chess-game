@@ -28,9 +28,10 @@ public interface ChessGameImplementor {
      * Interroge la méthode spécifique selon la pièce qui indique si un déplacement est possible
      * @param start : coordonnée de départ
      * @param end : coordonnée d'arrivée
-     * @return booléen indiquant si le déplacement est possible ou pas
+     * @param actionType : l'action à tester
+     * @return booléen indiquant si le l'action est possible ou pas
      */
-    boolean canMoveInThisWay(Coord start, Coord end);
+    boolean isActionPossible(Coord start, Coord end, ActionType actionType);
 
     /**
      * Signifie si une pièce se trouve à la coordonnée position
