@@ -18,11 +18,6 @@ public class Cavalier extends AbstractPiece {
     }
 
     @Override
-    public void getMoveItinary() {
-
-    }
-
-    @Override
     public int getX() {
         return this.getCoord().getX();
     }

@@ -17,8 +17,6 @@ public abstract class AbstractPiece implements Pieces {
 
     public abstract boolean isMoveOk(Pieces piece, Coord targetCoord);
 
-    public abstract void getMoveItinary();
-
     public String getNom() {
         return nom;
     }

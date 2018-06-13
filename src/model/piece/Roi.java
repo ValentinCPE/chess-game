@@ -4,10 +4,11 @@ import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Roi extends AbstractPiece {
-
+public class Roi extends AbstractPiece implements MemoriseSonPremierMouvement {
+    private boolean hasMoved = false;
     public Roi(Couleur col, Coord coord) {
         super("Roi", coord, col);
     }
@@ -15,11 +16,6 @@ public class Roi extends AbstractPiece {
     @Override
     public boolean isMoveOk(Pieces piece, Coord targetCoord) {
         return false;
-    }
-
-    @Override
-    public void getMoveItinary() {
-
     }
 
     @Override
@@ -34,17 +30,19 @@ public class Roi extends AbstractPiece {
 
     @Override
     public Couleur getCouleur() {
-        return null;
+        return this.getCol();
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.getNom();
     }
 
     @Override
     public ActionType doMove(int xFinal, int yFinal) {
-        return null;
+        this.setCoord(new Coord(xFinal, yFinal));
+        this.hasMoved = true;
+        return ActionType.MOVE;
     }
 
     @Override
@@ -54,7 +52,9 @@ public class Roi extends AbstractPiece {
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal) {
-        return false;
+        int deltaX = Math.abs(xFinal - this.getX());
+        int deltaY = Math.abs(yFinal - this.getY());
+        return deltaX == deltaY;
     }
 
     @Override
@@ -64,7 +64,9 @@ public class Roi extends AbstractPiece {
 
     @Override
     public List<Coord> getMoveItinerary(int xFinal, int yFinal) {
-        return null;
+        List<Coord> l = new ArrayList<>();
+        l.add(new Coord(xFinal, yFinal));
+        return l;
     }
 
     @Override
@@ -75,5 +77,10 @@ public class Roi extends AbstractPiece {
     @Override
     public boolean undoLastCatch() {
         return false;
+    }
+
+    @Override
+    public boolean hasMoved() {
+        return this.hasMoved;
     }
 }

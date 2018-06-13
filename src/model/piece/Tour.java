@@ -4,6 +4,7 @@ import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tour extends AbstractPiece {
@@ -20,11 +21,6 @@ public class Tour extends AbstractPiece {
     }
 
     @Override
-    public void getMoveItinary() {
-
-    }
-
-    @Override
     public int getX() {
         return this.getCoord().getX();
     }
@@ -36,17 +32,18 @@ public class Tour extends AbstractPiece {
 
     @Override
     public Couleur getCouleur() {
-        return null;
+        return this.getCol();
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.getNom();
     }
 
     @Override
     public ActionType doMove(int xFinal, int yFinal) {
-        return null;
+        this.setCoord(new Coord(xFinal, yFinal));
+        return ActionType.MOVE;
     }
 
     @Override
@@ -56,18 +53,43 @@ public class Tour extends AbstractPiece {
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal) {
-        return false;
+        return (xFinal == this.getX() && yFinal != this.getY()) || (xFinal != this.getX() && yFinal == this.getY());
     }
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal, ActionType type) {
-        return false;
+        switch (type) {
+            case MOVE:
+                return isAlgoMoveOk(xFinal, yFinal);
+            default:
+                return false;
+        }
     }
 
     @Override
     public List<Coord> getMoveItinerary(int xFinal, int yFinal) {
-        return null;
+        List<Coord> l = new ArrayList<>();
+        int x = this.getX();
+        int y = this.getY();
+        while (x != xFinal) {
+            if (x < xFinal) {
+                x--;
+            } else {
+                x++;
+            }
+            l.add(new Coord(x, y));
+        }
+        while (y != yFinal) {
+            if (y < yFinal) {
+                y--;
+            } else {
+                y++;
+            }
+            l.add(new Coord(x, y));
+        }
+        return l;
     }
+
 
     @Override
     public boolean undoLastMove() {
