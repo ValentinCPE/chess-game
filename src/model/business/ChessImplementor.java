@@ -94,7 +94,6 @@ public class ChessImplementor implements ChessGameImplementor {
                 }
             }
         }
-
         return pieceFound;
     }
 

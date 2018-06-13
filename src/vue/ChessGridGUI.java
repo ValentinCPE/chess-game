@@ -49,7 +49,7 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
         JPanel square;
 
-        JLabel chessPieceGUI = null;
+        JLabel chessPieceGUI;
         int index;
 
         for (int i = 0; i < ChessPiecePos.values().length; i++){
@@ -166,13 +166,6 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
             ret = laCase.getCoord();
         }
 
-        if((c instanceof ChessGridGUI)) {
-            System.out.println(c);
-        }
-
-        System.out.println(c);
-        System.out.println(ret);
-
         return ret;
     }
 
@@ -192,5 +185,23 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
 
     public Coord getInitialCoord() {
         return initialCoord;
+    }
+
+    public void take(Coord coordToEat){
+        if(coordToEat != null) {
+            ChessSquareGUI chessSquareGUI = this.map.get(coordToEat);
+
+            ChessPieceGUI chessPieceGUI = (ChessPieceGUI) chessSquareGUI.getComponents()[0];
+
+            if(chessPieceGUI != null){
+                this.pieceToMove.setVisible(false);
+
+                chessSquareGUI.remove(chessPieceGUI);
+                chessSquareGUI.add(this.pieceToMove);
+
+                this.pieceToMove.setVisible(true);
+                this.repaint();
+            }
+        }
     }
 }
