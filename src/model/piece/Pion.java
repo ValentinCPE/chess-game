@@ -37,11 +37,6 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
     }
 
     @Override
-    public void getMoveItinary() {
-
-    }
-
-    @Override
     public int getX() {
         return this.getCoord().getX();
     }

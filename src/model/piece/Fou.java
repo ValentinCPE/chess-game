@@ -34,17 +34,18 @@ public class Fou extends AbstractPiece {
 
     @Override
     public Couleur getCouleur() {
-        return null;
+        return this.getCol();
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.getNom();
     }
 
     @Override
     public ActionType doMove(int xFinal, int yFinal) {
-        return null;
+        this.setCoord(new Coord(xFinal, yFinal));
+        return ActionType.MOVE;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class Fou extends AbstractPiece {
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal) {
-        return false;
+        return Math.abs(xFinal - this.getX()) == Math.abs(yFinal - this.getY());
     }
 
     @Override
