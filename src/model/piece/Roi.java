@@ -52,7 +52,12 @@ public class Roi extends AbstractPiece implements MemoriseSonPremierMouvement {
 
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal, ActionType type) {
-        return false;
+        switch(type) {
+            case MOVE:
+                return isAlgoMoveOk(xFinal, yFinal);
+            default:
+                return false;
+        }s
     }
 
     @Override

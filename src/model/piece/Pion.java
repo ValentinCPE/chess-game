@@ -1,5 +1,6 @@
 package model.piece;
 
+import tools.BoardGameConfig;
 import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
@@ -48,6 +49,38 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
     }
 
     @Override
+    public boolean isAlgoMoveOk(int xFinal, int yFinal, ActionType type) {
+        switch(type) {
+            case MOVE:
+                return isAlgoMoveOk(xFinal, yFinal);
+            case TAKE:
+                return isTakeOk(xFinal, yFinal);
+            case PROMOTION:
+                return isPromotionOk(xFinal);
+            case PRISE_EN_PASSANT:
+                return isEnPassantOk(xFinal, yFinal);
+            default:
+                return false;
+        }
+    }
+
+    private boolean isPromotionOk(int xFinal) {
+        if (this.getCouleur() == Couleur.BLANC) {
+            return xFinal == 0;
+        } else {
+            return xFinal == BoardGameConfig.getNbLigne() - 1;
+        }
+    }
+
+    private boolean isEnPassantOk(int xFinal, int yFinal) {
+        if (this.getCouleur() == Couleur.BLANC) {
+            return (xFinal == BoardGameConfig.getBlancEnPassant()) && (isTakeOk(xFinal, yFinal));
+        } else {
+            return (xFinal == BoardGameConfig.getNoirEnPassant()) && (isTakeOk(xFinal, yFinal));
+        }
+    }
+
+    @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal) {
         boolean isOk = true;
 
@@ -64,18 +97,18 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
                 isOk = (this.getX() == xFinal && this.getY()-2 == yFinal) || (this.getX() == xFinal && this.getY()-1 == yFinal);
             }
         }
-
         return isOk;
     }
 
-    @Override
-    public boolean isAlgoMoveOk(int xFinal, int yFinal, ActionType type) {
-        if (type == ActionType.MOVE) {
-            System.out.println("is a move");
-            return isAlgoMoveOk(xFinal, yFinal);
+    private boolean isTakeOk(int xFinal, int yFinal) {
+        if (this.getCouleur() == Couleur.BLANC) {
+            return (this.getX() > xFinal) && (Math.abs(this.getY() - yFinal) == 1);
+        } else {
+            return (this.getX() < xFinal) && (Math.abs(this.getY() - yFinal) == 1);
         }
-        return false;
     }
+
+
 
     @Override
     public List<Coord> getMoveItinerary(int xFinal, int yFinal) {

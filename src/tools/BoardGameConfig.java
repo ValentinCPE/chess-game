@@ -11,6 +11,9 @@ public class BoardGameConfig {
 	private static Couleur beginColor;
 	private static Color blackSquareColor, whiteSquareColor;
 	private static int dim;
+	private static final int blancEnPassant = 3;
+	private static final int noirEnPassant = 4;
+
 	
 	/**
 	 * @param nbLigne
@@ -28,6 +31,7 @@ public class BoardGameConfig {
 					 beginColor, blackSquareColor, whiteSquareColor, dim);
 		return instance;
 	}
+
 	private BoardGameConfig(int nbLigne, int nbColonne, String factoryName,
 			Couleur beginColor, Color blackSquareColor, Color whiteSquareColor, int dim) {
 	
@@ -97,5 +101,12 @@ public class BoardGameConfig {
 	public static int getDim() {
 		return BoardGameConfig.dim;
 	}
-	
+
+    public static int getBlancEnPassant() {
+        return blancEnPassant;
+    }
+
+    public static int getNoirEnPassant() {
+        return noirEnPassant;
+    }
 }
