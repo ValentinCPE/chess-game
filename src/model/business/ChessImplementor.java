@@ -1,6 +1,7 @@
 package model.business;
 
 import model.piece.Pieces;
+import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
 import tools.factory.ChessPiecesFactory;
@@ -42,5 +43,51 @@ public class ChessImplementor implements ChessGameImplementor {
 
     public Map<Coord, Pieces> getMap() {
         return map;
+    }
+
+    public Couleur getColorForAPiece(int x, int y){
+        Coord coord = new Coord(x,y);
+
+        return this.getPieces(coord).getCouleur();
+    }
+
+    public boolean canMoveInThisWay(Coord start, Coord end){
+        boolean movePossible = false;
+
+        Pieces pieceToTest = this.getPieces(start);
+
+        if(pieceToTest.isAlgoMoveOk(end.getX(),end.getY())){
+            movePossible = true;
+        }
+
+        return movePossible;
+    }
+
+    public boolean isPieceToEatAtPosition(Coord position){
+        boolean exists = false;
+
+        if(this.getPieces(position) != null){
+            exists = true;
+        }
+
+        return exists;
+    }
+
+    public ActionType doMove(int xInit, int yInit, int xFinal, int yFinal){
+        ActionType actionType = ActionType.ILLEGAL;
+
+        Coord start = new Coord(xInit,yInit);
+
+        Pieces pieces = this.getPieces(start);
+
+        if(pieces != null){
+            actionType = pieces.doMove(xFinal,yFinal);
+        }
+
+        return actionType;
+    }
+
+    private Pieces getPieces(Coord coord){
+        return this.map.get(coord);
     }
 }

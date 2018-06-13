@@ -117,7 +117,17 @@ public class ChessGridGUI extends JLayeredPane implements ChessGameGUI {
             if (this.pieceToMove == null) {
                 throw new PieceDoesNotExist(TextMessage.PIECE_DOES_NOT_EXIST.toString());
             } else {
-                this.pieceToMove.setLocation(this.getX(), this.getY());
+                this.pieceToMove.setVisible(false);
+
+                ChessSquareGUI chessSquareGUI = this.map.get(pieceToMoveInitCoord);
+
+                if(chessSquareGUI != null){
+                    chessSquareGUI.add(this.pieceToMove);
+                }
+
+                this.pieceToMove.setVisible(true);
+                this.pieceToMove = null;
+                this.repaint();
             }
         } catch (PieceDoesNotExist exc){
             System.err.println(exc.getMessage());

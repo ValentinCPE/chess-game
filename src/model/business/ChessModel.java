@@ -5,6 +5,8 @@ import tools.BoardGameConfig;
 import tools.data.ActionType;
 import tools.data.Coord;
 import tools.data.Couleur;
+import tools.data.TextMessage;
+import tools.exception.CoordIsNullException;
 
 import java.util.List;
 
@@ -33,8 +35,7 @@ public class ChessModel implements ChessGameModel {
 
     @Override
     public Couleur getPieceColor(int x, int y) {
-        System.out.println(this.chessImplementor.getMap());
-        return this.chessImplementor.getMap().get(new Coord(x, y)).getCouleur();
+        return this.chessImplementor.getColorForAPiece(x,y);
     }
 
     @Override
@@ -44,13 +45,43 @@ public class ChessModel implements ChessGameModel {
 
     @Override
     public ActionType move(int xInit, int yInit, int xFinal, int yFinal) {
-        Coord cInit = new Coord(xInit, yInit);
-        Coord cFinal = new Coord(xFinal, yFinal);
-        Pieces movingPiece = this.chessImplementor.getMap().get(cInit);
-        if (movingPiece.isAlgoMoveOk(xFinal, yFinal)) {
-            movingPiece.doMove(xFinal, yFinal);
-            return ActionType.MOVE;
+
+        try {
+            if ((xInit < 0 || xInit >= BoardGameConfig.getNbColonne()) || (yInit < 0 || yInit >= BoardGameConfig.getNbLigne())) {
+                throw new CoordIsNullException(TextMessage.INIT_VALUE_POSITION_NOT_CORRECT.toString());
+            }
+
+            if ((xFinal < 0 || xFinal >= BoardGameConfig.getNbColonne()) || (yFinal < 0 || yFinal >= BoardGameConfig.getNbLigne())) {
+                return ActionType.ILLEGAL;
+            }
+
+            if (this.getPieceColor(xInit, yInit) == null || this.getPieceColor(xInit, yInit) != this.colorCurrentPlayer) {
+                return ActionType.ILLEGAL;
+            }
+
+            Coord coordInit = new Coord(xInit, yInit);
+            Coord coordEnd = new Coord(xFinal, yFinal);
+
+            if (!this.chessImplementor.canMoveInThisWay(coordInit, coordEnd)) {
+                return ActionType.ILLEGAL;
+            }
+
+            boolean isPieceToEat = this.chessImplementor.isPieceToEatAtPosition(coordEnd);
+
+            if (isPieceToEat) {
+                if (this.getPieceColor(xFinal,yFinal) == this.colorCurrentPlayer) {
+                    return ActionType.ILLEGAL;
+                } else {
+                    return ActionType.TAKE;
+                }
+            } else {
+                return this.chessImplementor.doMove(xInit,yInit,xFinal,yFinal);
+            }
+
+        }catch(CoordIsNullException exc){
+            System.err.println(exc.getMessage());
         }
+
         return ActionType.UNKNOWN;
     }
 

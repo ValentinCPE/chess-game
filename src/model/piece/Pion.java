@@ -33,7 +33,6 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
                 isMoveOK = targetCoord.getY() + 1 == piece.getY() && targetCoord.getX() == piece.getX();
             }
         }
-        System.out.println("is move ok ? " + isMoveOK);
         return isMoveOK;
     }
 
@@ -66,7 +65,6 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
     public ActionType doMove(int xFinal, int yFinal) {
         this.setCoord(new Coord(xFinal, yFinal));
         this.hasMoved = true;
-        System.out.println("this pion " + this.toString());
         return ActionType.MOVE;
     }
 
@@ -78,19 +76,21 @@ public class Pion extends AbstractPiece implements MemoriseSonPremierMouvement {
     @Override
     public boolean isAlgoMoveOk(int xFinal, int yFinal) {
         boolean isOk = true;
+
         if (hasMoved()) {
             if (this.getCouleur() == Couleur.BLANC) {
-                isOk = this.getX() == xFinal+1 && this.getY() == yFinal;
+                isOk = this.getX() == xFinal && this.getY()+1 == yFinal;
             } else {
-                isOk = this.getX() == xFinal-1 && this.getY() == yFinal;
+                isOk = this.getX() == xFinal && this.getY()-1 == yFinal;
             }
         } else {
             if (this.getCouleur() == Couleur.NOIR) {
-                isOk = this.getX() == xFinal+2 && this.getY() == yFinal;
+                isOk = this.getX() == xFinal && this.getY()+2 == yFinal;
             } else {
-                isOk = this.getX() == xFinal-2 && this.getY() == yFinal;
+                isOk = this.getX() == xFinal && this.getY()-2 == yFinal;
             }
         }
+
         return isOk;
     }
 
